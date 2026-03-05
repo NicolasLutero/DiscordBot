@@ -1,0 +1,67 @@
+# Machine.py
+from typing import List, Dict, Any, Set
+
+from .sender import Sender
+from .base_state import BaseState
+from .base_symbol import BaseSymbol
+
+
+# ==========================================================
+# Machine
+# ==========================================================
+
+class Machine(Sender):
+    def __init__(self):
+        super().__init__()
+        self.states: List[BaseState] = []
+        self.relations: Dict[str, Dict[str, Any]] = {}
+
+    def add_state(self, state: BaseState) -> None:
+        self.states.append(state)
+
+    # ------------------------------------------------------
+    # Execução
+    # ------------------------------------------------------
+
+    def accepted_symbols(
+            self,
+            sender: Sender
+    ) -> Set[type[BaseSymbol]]:
+
+        symbols = set()
+
+        for state in self.states:
+            if state.is_active(self, sender):
+                symbols.update(state.symbol_handlers)
+
+        return symbols
+
+    def receive(
+        self,
+        symbol: BaseSymbol,
+        sender: Sender
+    ) -> List[Exception]:
+
+        handlers = []
+
+        for state in self.states:
+            if state.is_active(self, sender):
+                for symbol_cls, entries in state.symbol_handlers.items():
+                    if isinstance(symbol, symbol_cls):
+                        handlers.extend(entries)
+
+        handlers.sort(key=lambda h: (-h.priority, h.order))
+
+        errors: List[Exception] = []
+
+        for entry in handlers:
+            try:
+                entry.handler(
+                    machine=self,
+                    sender=sender,
+                    symbol=symbol
+                )
+            except Exception as e:
+                errors.append(e)
+
+        return errors
