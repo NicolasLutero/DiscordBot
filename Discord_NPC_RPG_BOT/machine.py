@@ -19,6 +19,9 @@ class Machine(Sender):
     def add_state(self, state: BaseState) -> None:
         self.states.append(state)
 
+    def add_states(self, states: List[BaseState]) -> None:
+        self.states.extend(states)
+
     # ------------------------------------------------------
     # Execução
     # ------------------------------------------------------
@@ -52,16 +55,23 @@ class Machine(Sender):
 
         handlers.sort(key=lambda h: (-h.priority, h.order))
 
-        errors: List[Exception] = []
+        retornar = {
+            "errors": [],
+            "retornos": [],
+            "called_handlers": len(handlers),
+            "called_entries": 0
+        }
 
         for entry in handlers:
+            retornar["called_entries"] += 1
             try:
-                entry.handler(
+                resp = entry.handler(
                     machine=self,
                     sender=sender,
                     symbol=symbol
                 )
+                retornar["retornos"].append(resp)
             except Exception as e:
-                errors.append(e)
+                retornar["errors"].append(e)
 
-        return errors
+        return retornar

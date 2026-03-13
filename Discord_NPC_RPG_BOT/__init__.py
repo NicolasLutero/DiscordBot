@@ -7,5 +7,5 @@ __all__ = [
     "Sender",
     "Machine",
     "BaseState",
-    "BaseSymbol",
+    "BaseSymbol"
 ]
