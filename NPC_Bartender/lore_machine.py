@@ -10,9 +10,9 @@ from NPC_Bartender.assistant_state_symbol import TalkingSymbol
 class IntroduceYourselfSymbol(TalkingSymbol):
     description = "<Se apresentar>"
 
-    def __init__(self, name):
-        self.name = name
-        super().__init__(f"Olá, meu nome é {self.name}")
+    def __init__(self):
+        self.name = input("Se apresentar como: ")
+        super().__init__(f"{self.name}: Olá, meu nome é {self.name}")
 
 
 class TalkALittleSymbol(TalkingSymbol):
@@ -81,7 +81,7 @@ def introduceyourself_stranger(machine, sender, symbol):
     machine.knows_people[sender]["name"] = symbol.name
     machine.knows_people[sender]["conversations"] = 1
 
-    return [TalkingSymbol(f"Olá {symbol.name}! Sou {machine.bot_name}.")]
+    return [TalkingSymbol(f"{machine.bot_name}: Olá {symbol.name}! Sou {machine.bot_name}.")]
 
 def talk_state(machine, sender, symbol):
     if isinstance(symbol, TalkALittleSymbol): conversations = 3

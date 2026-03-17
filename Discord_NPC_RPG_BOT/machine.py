@@ -70,7 +70,7 @@ class Machine(Sender):
                     sender=sender,
                     symbol=symbol
                 )
-                retornar["retornos"].append(resp)
+                retornar["retornos"].append(resp if resp is not None else [])
             except Exception as e:
                 retornar["errors"].append(e)
 
