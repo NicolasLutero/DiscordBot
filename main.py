@@ -85,6 +85,17 @@ async def action(interaction, symbol):
         retorno += "\n"
     if retorno == "":
         retorno = "..."
+
+    available = bot.machine.accepted_symbols(sender)
+    if not available:
+        await interaction.response.send_message("Nenhuma ação disponível.")
+        return
+    msg = "\n".join(
+        f"/{symbol.__name__.replace('Symbol', '').lower()} - {symbol.description}"
+        for symbol in available
+    )
+    retorno += msg
+
     await interaction.response.send_message(retorno)
 
 # FORA DA CAFETERIA
