@@ -24,14 +24,13 @@ class LiuMachine(
 
 liu_machine = LiuMachine()
 
+class Player(Sender):
+    def __init__(self):
+        super().__init__()
+        self.on_coffee_shop = False
+
 
 if __name__ == "__main__":
-    class Player(Sender):
-        def __init__(self):
-            super().__init__()
-            self.on_coffee_shop = False
-
-
     player = Player()
     while True:
         print("0 - Sair")

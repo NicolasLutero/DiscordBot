@@ -1,16 +1,11 @@
 import discord
+import json
 from discord import app_commands
 
 from NPC_Bartender import *
-from NPC_RPG_BOT.sender import Sender
+from NPC_RPG_BOT import Sender
 
 senders = {}
-
-
-class Player(Sender):
-    def __init__(self):
-        super().__init__()
-        self.on_coffee_shop = False
 
 
 # ======================
@@ -36,7 +31,7 @@ class DiscordBOT(discord.Client):
             senders[user_id] = Player()
         return senders[user_id]
 
-    async def check_sender(self, symbol: type, sender: Sender):
+    async def check_sender(self, symbol: type, sender: Sender, interaction: discord.Interaction):
         if symbol not in self.machine.accepted_symbols(sender):
             await interaction.response.send_message("Essa ação não está disponível agora.")
             return False
@@ -78,8 +73,9 @@ async def simbolos(interaction: discord.Interaction):
 # ----------------------
 # Comandos de Symbols
 # ----------------------
-async def action(interaction, symbol, sender):
-    if not await bot.check_sender(type(symbol), sender):
+async def action(interaction, symbol):
+    sender = bot.get_sender(interaction)
+    if not await bot.check_sender(type(symbol), sender, interaction):
         return
     result = bot.machine.receive(symbol, sender)
     retorno = ""
@@ -94,15 +90,130 @@ async def action(interaction, symbol, sender):
 # FORA DA CAFETERIA
 @bot.tree.command(name="getin")
 async def getin(interaction: discord.Interaction):
-    sender = bot.get_sender(interaction)
-    symbol = GetInSymbol
-    await action(interaction, symbol(), sender)
+    await action(interaction, GetInSymbol())
 
-# ACABOU DE ENTRAR
+#
 @bot.tree.command(name="askcoffee")
 async def askcoffee(interaction: discord.Interaction):
-    sender = bot.get_sender(interaction)
-    symbol = AskCoffeeSymbol
-    await action(interaction, symbol(), sender)
+    await action(interaction, AskCoffeeSymbol())
 
-bot.run("MTQ3OTIxMjg5NTU1MTM2MTA1NA.GmbVz4.7z01ltu1uIFleAWmHsaI-_OYcsiHEKcS7PRBZo")
+#
+@bot.tree.command(name="giveupcoffee")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, GiveUpCoffeeSymbol())
+
+#
+@bot.tree.command(name="askespressocoffee")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskEspressoCoffeeSymbol())
+
+#
+@bot.tree.command(name="askcappuccinocoffee")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskCappuccinoCoffeeSymbol())
+
+#
+@bot.tree.command(name="askcoffeewithmilk")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskCoffeeWithMilkSymbol())
+
+#
+@bot.tree.command(name="asksuggestioncoffee")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskSuggestionCoffeeSymbol())
+
+
+
+#
+@bot.tree.command(name="askdessert")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskDessertSymbol())
+
+#
+@bot.tree.command(name="giveupdessert")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, GiveUpDessertSymbol())
+
+#
+@bot.tree.command(name="askchocolatecakedessert")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskChocolateCakeDessertSymbol())
+
+#
+@bot.tree.command(name="askcroissantdessert")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskCroissantDessertSymbol())
+
+#
+@bot.tree.command(name="askstrawberrypiedessert")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskStrawberryPieDessertSymbol())
+
+#
+@bot.tree.command(name="asksuggestiondessert")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskSuggestionDessertSymbol())
+
+
+
+#
+@bot.tree.command(name="justlooking")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, JustLookingSymbol())
+
+#
+@bot.tree.command(name="makeorder")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, MakeOrderSymbol())
+
+#
+@bot.tree.command(name="thanks")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, ThanksSymbol())
+
+#
+@bot.tree.command(name="aboutaroma")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AboutAromaSymbol())
+
+#
+@bot.tree.command(name="seemenu")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, SeeMenuSymbol())
+
+
+
+#
+@bot.tree.command(name="casualtalk")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, CasualTalkSymbol())
+
+#
+@bot.tree.command(name="askwork")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskWorkSymbol())
+
+#
+@bot.tree.command(name="askfavoritedrink")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskFavoriteDrinkSymbol())
+
+#
+@bot.tree.command(name="askrecommendation")
+async def askcoffee(interaction: discord.Interaction):
+    await action(interaction, AskRecommendationSymbol())
+
+
+# =================
+# CHAVE DO BOT
+# =================
+def load_token():
+    try:
+        with open("token.json", "r") as f:
+            dados = json.load(f)
+            return dict(dados)["token"]
+    except FileNotFoundError:
+        return None
+
+
+bot.run(load_token())
