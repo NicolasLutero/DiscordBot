@@ -1,8 +1,8 @@
 import discord
 from discord import app_commands
 
-from NPC_Bartender2 import *
-from Discord_NPC_RPG_BOT.sender import Sender
+from NPC_Bartender import *
+from NPC_RPG_BOT.sender import Sender
 
 senders = {}
 

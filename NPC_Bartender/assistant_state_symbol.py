@@ -1,5 +1,5 @@
 # assistant_state_symbol.py
-from Discord_NPC_RPG_BOT import BaseSymbol
+from NPC_RPG_BOT import BaseSymbol
 
 
 # =================

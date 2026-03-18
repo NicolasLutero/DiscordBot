@@ -1,7 +1,7 @@
-# smalltalk_machine.py
-from Discord_NPC_RPG_BOT import BaseState
+# outin_machine.py
+from NPC_RPG_BOT import BaseState
 
-from NPC_Bartender2.assistant_state_symbol import TalkingSymbol
+from NPC_Bartender.assistant_state_symbol import TalkingSymbol
 
 
 # =================
@@ -33,9 +33,9 @@ def getin_out(machine, sender, symbol):
         if sender in machine.relations.keys():
             relation = machine.relations[sender]
             if "apelido" in relation.keys():
-                msm = f"Olá {relation["apelido"]}! Tudo bem? Como posso te ajudar?"
+                msm = f"Oi {relation["apelido"]}! Tudo bem? Como posso te ajudar?"
             elif "nome" in relation.keys():
-                msm = f"Oi {relation["nome"]}! Bem-vindo de volta ao Café Aurora! Como posso te ajudar?"
+                msm = f"Olá {relation["nome"]}! Bem-vindo de volta ao Café Aurora! Como posso te ajudar?"
     return [
         TalkingSymbol(symbol.msm),
         TalkingSymbol(f"Liu: {msm}")

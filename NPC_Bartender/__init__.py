@@ -1,11 +1,10 @@
 # __init__.py
-from .bartender_machine import bartender_machine
-from .lore_machine import IntroduceYourselfSymbol, TalkALittleSymbol, TalkSymbol, TalkALotSymbol
+from .liu_machine import liu_machine
+from .outin_machine import GetInSymbol
+from .coffee_machine import AskCoffeeSymbol
 
 __all__ = [
-    "bartender_machine",
-    "IntroduceYourselfSymbol",
-    "TalkALittleSymbol",
-    "TalkSymbol",
-    "TalkALotSymbol"
+    "liu_machine",
+    "GetInSymbol",
+    "AskCoffeeSymbol"
 ]
