@@ -133,8 +133,6 @@ async def askcoffee(interaction: discord.Interaction):
 async def askcoffee(interaction: discord.Interaction):
     await action(interaction, AskSuggestionCoffeeSymbol())
 
-
-
 #
 @bot.tree.command(name="askdessert")
 async def askcoffee(interaction: discord.Interaction):
@@ -165,8 +163,6 @@ async def askcoffee(interaction: discord.Interaction):
 async def askcoffee(interaction: discord.Interaction):
     await action(interaction, AskSuggestionDessertSymbol())
 
-
-
 #
 @bot.tree.command(name="justlooking")
 async def askcoffee(interaction: discord.Interaction):
@@ -191,8 +187,6 @@ async def askcoffee(interaction: discord.Interaction):
 @bot.tree.command(name="seemenu")
 async def askcoffee(interaction: discord.Interaction):
     await action(interaction, SeeMenuSymbol())
-
-
 
 #
 @bot.tree.command(name="casualtalk")

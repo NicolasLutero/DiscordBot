@@ -119,7 +119,7 @@ def askstrawberrypiedessert_interesteddessert(machine, sender, symbol):
         machine.relations[sender] = {}
     machine.relations[sender]["Interested"] = "Nothing"
     return [
-        TalkingSymbol("Você: Eu gostaria uma Torta de Morango."),
+        TalkingSymbol("Você: Eu gostaria de uma Torta de Morango."),
         TalkingSymbol("Liu corta um pedaço da Torta de Morango e te serve."),
         TalkingSymbol("Liu: Torta de Morango! A mais pedida!")
     ]
